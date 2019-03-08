@@ -5,3 +5,5 @@ __pycache__/
 
 dataset/
 dataset_upload/
+
+.vscode
