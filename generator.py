@@ -31,7 +31,18 @@ def split_in_datasets(df, r_train=0.8, r_val=0.1, r_test=0.1):
     return df
 
 
-def generate_dataset(bucket_name, dataset_local_path, dataset_gcp_name='dataset', min_samples=10):
+def check_extension(filename, extensions):
+    list_extensions = extensions.split(",")
+    for ext in list_extensions:
+        try:
+            if ext.strip() == filename.split(".")[-1].strip():
+                return True
+        except:
+            pass
+    return False
+
+
+def generate_dataset(bucket_name, dataset_local_path, dataset_gcp_name='dataset', min_samples=10, extensions="png,jpg,jpeg"):
     try:
         shutil.rmtree('temp')
     except:
@@ -57,7 +68,7 @@ def generate_dataset(bucket_name, dataset_local_path, dataset_gcp_name='dataset'
         df = pd.DataFrame(columns=columns)
 
         files = [filename for filename in listdir(
-            path) if isfile(path + '/' + filename)]
+            path) if isfile(path + '/' + filename) and check_extension(filename, extensions)]
         num_files = len(files)
         if num_files >= min_samples:
             for i, filename in enumerate(files):

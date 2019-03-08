@@ -7,3 +7,7 @@ dataset/
 dataset_upload/
 
 .vscode
+
+temp
+keys
+.DS_Store
